@@ -8,51 +8,12 @@ class Administrador(models.Model):
     contraseña = models.CharField(max_length=42, blank=True, null=True)
     correo_electronico = models.CharField(max_length=45, blank=True, null=True)
 
-<<<<<<< HEAD
 class Cliente(models.Model):
     id_cliente = models.AutoField(primary_key=True)
     numero_documento = models.CharField(max_length=70)
     numero_telefonico = models.CharField(max_length=20)
     correo_electronico = models.CharField(max_length=70, blank=True, null=True)
     direccion = models.CharField(max_length=70, blank=True, null=True)
-=======
-from django.db import models
-
-class Cliente(models.Model):
-    nombre = models.CharField(max_length=70)
-    # ... otros campos ...
-
-    def __str__(self):
-        return self.nombre
-
-class Marca(models.Model):
-    marca = models.CharField(max_length=35)
-    # ... otros campos ...
-
-    def __str__(self):
-        return self.marca
-
-class Equipo(models.Model):
-    nombre = models.CharField(max_length=100)
-    descripcion = models.TextField()
-    estado = models.CharField(max_length=50, choices=[('Activo', 'Activo'), ('Inactivo', 'Inactivo')])
-
-
-
-
-
-
-    # Agrega estos si los necesitas:
-    cliente = models.CharField(max_length=100, blank=True, null=True)
-    marca = models.CharField(max_length=100, blank=True, null=True)
-    modelo = models.CharField(max_length=100, blank=True, null=True)
-    clave = models.CharField(max_length=100, blank=True, null=True)
-
-    def __str__(self):
-        return self.nombre
-
-
->>>>>>> 929d21c (Commit Modulos Jorge)
 
 class ComprasMercancia(models.Model):
     id_compra = models.AutoField(primary_key=True)
@@ -63,15 +24,12 @@ class ComprasMercancia(models.Model):
     administrador_id = models.ForeignKey(Administrador, models.DO_NOTHING, db_column='administrador_id', blank=True, null=True)
     precio_compra = models.CharField(max_length=50, blank=True, null=True)
 
-<<<<<<< HEAD
 class Equipo(models.Model):
     id_equipo = models.AutoField(primary_key=True)
     modelo = models.CharField(max_length=30, blank=True, null=True)
     clave = models.CharField(max_length=35, blank=True, null=True)
     cliente_id_cliente = models.ForeignKey(Cliente, models.DO_NOTHING, db_column='cliente_id_cliente', blank=True, null=True)
 
-=======
->>>>>>> 929d21c (Commit Modulos Jorge)
 class Facturacion(models.Model):
     id_recibo = models.AutoField(primary_key=True)
     fecha_id_venta = models.DateField(blank=True, null=True)
@@ -83,7 +41,6 @@ class Garantias(models.Model):
     id_garantias = models.AutoField(primary_key=True)
     facturacion_id_recibo = models.ForeignKey(Facturacion, models.DO_NOTHING, db_column='facturacion_id_recibo', blank=True, null=True)
 
-<<<<<<< HEAD
 class Marca(models.Model):
     id_marca = models.AutoField(primary_key=True)
     color = models.CharField(max_length=25)
@@ -92,9 +49,6 @@ class Marca(models.Model):
 
     def __str__(self):
         return self.marca
-=======
-
->>>>>>> 929d21c (Commit Modulos Jorge)
 
 class Orden_servicio(models.Model):
     id_orden_servicio = models.AutoField(primary_key=True)

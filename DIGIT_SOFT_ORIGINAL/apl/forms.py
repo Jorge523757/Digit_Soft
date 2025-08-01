@@ -3,10 +3,6 @@ from .models import *
 from django import forms
 from django import forms
 from apl.models import ServicioTecnico
-<<<<<<< HEAD
-=======
-from .models import Equipo
->>>>>>> 929d21c (Commit Modulos Jorge)
 from .models import *
 
 
@@ -75,23 +71,6 @@ class ServicioTecnicoForm(forms.ModelForm):
 
 
 
-<<<<<<< HEAD
-=======
-
-class EquipoForm(forms.ModelForm):
-    class Meta:
-        model = Equipo
-        fields = ['modelo', 'clave', 'cliente', 'marca']
-        widgets = {
-            'modelo': forms.TextInput(attrs={'class': 'form-control'}),
-            'clave': forms.TextInput(attrs={'class': 'form-control'}),
-            'cliente': forms.Select(attrs={'class': 'form-control'}),
-            'marca': forms.Select(attrs={'class': 'form-control'}),
-        }
-
-
-
->>>>>>> 929d21c (Commit Modulos Jorge)
         
 class Facturacionform(ModelForm):
     def __init__(self, *args, **kwargs):

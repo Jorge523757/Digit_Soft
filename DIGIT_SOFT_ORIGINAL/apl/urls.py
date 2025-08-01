@@ -11,15 +11,6 @@ from apl.views.ServicioTecnico.views import (
     ServicioTecnicoUpdateView,
     ServicioTecnicoDeleteView
 )
-<<<<<<< HEAD
-=======
-from apl.views.Equipo.views import (
-    EquipoListView,
-    EquipoCreateView,
-    EquipoUpdateView,
-    EquipoDeleteView,
-)
->>>>>>> 929d21c (Commit Modulos Jorge)
 
 from django.urls import path
 
@@ -50,15 +41,6 @@ urlpatterns = [
     path('servicio/crear/', ServicioTecnicoCreateView.as_view(), name='servicio_crear'),
     path('servicio/editar/<int:pk>/', ServicioTecnicoUpdateView.as_view(), name='servicio_editar'),
     path('servicio/eliminar/<int:pk>/', ServicioTecnicoDeleteView.as_view(), name='servicio_eliminar'),
-<<<<<<< HEAD
-=======
-    
-    #url de Equipos
-    path('equipos/listar/', EquipoListView.as_view(), name='listar_equipos'),
-    path('equipos/crear/', EquipoCreateView.as_view(), name='crear_equipo'),
-    path('equipos/editar/<int:pk>/', EquipoUpdateView.as_view(), name='editar_equipo'),
-    path('equipos/eliminar/<int:pk>/', EquipoDeleteView.as_view(), name='eliminar_equipo'),
->>>>>>> 929d21c (Commit Modulos Jorge)
 
 
     #url de facturacion
