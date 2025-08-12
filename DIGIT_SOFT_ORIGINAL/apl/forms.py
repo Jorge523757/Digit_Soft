@@ -1,225 +1,208 @@
 from django.forms import *
 from .models import *
-from django import forms
-from django import forms
-from apl.models import ServicioTecnico
-<<<<<<< HEAD
-=======
-from .models import Equipo
->>>>>>> 929d21c (Commit Modulos Jorge)
-from .models import *
 
+from django import forms
+from django.forms import ModelForm, TextInput, Textarea, PasswordInput, DateInput, NumberInput
+from .models import (
+    Cliente, Marca, Proveedor, Administrador, Producto, Equipo, Tecnico,
+    OrdenServicio, ServicioTecnico, Venta, ComprasMercancia, Facturacion, Garantias
+)
 
-class AdministradorForm(ModelForm):
+class ClienteForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # for form in self.visible_fields():
-        #     form.field.widget.attrs['class'] = 'form-control'
-        #     form.field.widget.attrs['autocomplete'] = 'off'
         self.fields['nombre'].widget.attrs['autofocus'] = True
-        
+
     class Meta:
-        model = Administrador
+        model = Cliente
         fields = '__all__'
         widgets = {
-            'nombre' : TextInput(
-                attrs={
-                    'placeholder' : 'Ingrese un nombre',
-                }
-            ),
-            'descripcion' : Textarea(
-               attrs={
-                  'placeholder' : 'Ingrese una descripción',
-                  'rows': 3,
-                  'cols': 40,
-                }
-            ),
-        }
-# apl/forms.py
-
-
-
-class TecnicoForm(forms.ModelForm):
-    class Meta:
-        model = Tecnicos
-        fields = '__all__'
-        widgets = {
-            'nombre_completo': forms.TextInput(attrs={'class': 'form-control'}),
-            'n_documento': forms.TextInput(attrs={'class': 'form-control'}),
-            'numero_telefonico': forms.TextInput(attrs={'class': 'form-control'}),
-            'correo': forms.EmailInput(attrs={'class': 'form-control'}),
-            'direccion': forms.TextInput(attrs={'class': 'form-control'}),
-            'tipo_tecnico': forms.TextInput(attrs={'class': 'form-control'}),
+            'nombre': TextInput(attrs={'placeholder': 'Ingrese el nombre'}),
+            'numero_documento': TextInput(attrs={'placeholder': 'Ingrese el número de documento'}),
+            'numero_telefonico': TextInput(attrs={'placeholder': 'Ingrese el número telefónico'}),
+            'correo_electronico': TextInput(attrs={'placeholder': 'Ingrese el correo electrónico'}),
+            'direccion': TextInput(attrs={'placeholder': 'Ingrese la dirección'}),
         }
 
 
-
-
-
-class ServicioTecnicoForm(forms.ModelForm):
-    class Meta:
-        model = ServicioTecnico
-        fields = '__all__'
-        widgets = {
-            'cliente_id_cliente': forms.Select(attrs={'class': 'form-control'}),
-            'tecnicos_id_tecnico': forms.Select(attrs={'class': 'form-control'}),
-            'orden_servicio_id_orden_servicio': forms.Select(attrs={'class': 'form-control'}),
-            'nombre_cliente_registro': forms.TextInput(attrs={'class': 'form-control'}),
-            'telefono_cliente_registro': forms.TextInput(attrs={'class': 'form-control'}),
-            'correo_cliente_registro': forms.EmailInput(attrs={'class': 'form-control'}),
-            'nombre_tecnico_asignado_registro': forms.TextInput(attrs={'class': 'form-control'}),
-            'telefono_tecnico_asignado_registro': forms.TextInput(attrs={'class': 'form-control'}),
-            'numero_orden_registro': forms.TextInput(attrs={'class': 'form-control'}),
-        }
-
-
-
-
-<<<<<<< HEAD
-=======
-
-class EquipoForm(forms.ModelForm):
-    class Meta:
-        model = Equipo
-        fields = ['modelo', 'clave', 'cliente', 'marca']
-        widgets = {
-            'modelo': forms.TextInput(attrs={'class': 'form-control'}),
-            'clave': forms.TextInput(attrs={'class': 'form-control'}),
-            'cliente': forms.Select(attrs={'class': 'form-control'}),
-            'marca': forms.Select(attrs={'class': 'form-control'}),
-        }
-
-
-
->>>>>>> 929d21c (Commit Modulos Jorge)
-        
-class Facturacionform(ModelForm):
+class MarcaForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['fecha_id_venta'].widget.attrs['autofocus'] = True
-        
-    class Meta:
-        model = Facturacion
-        fields = '__all__'
-        widgets = {
-            'fecha_id_venta' : TextInput(
-                attrs={
-                    'placeholder' : 'Ingrese fecha en formato DD/MM/AAAA',
-                }
-            ),
-            'descripcion_venta' : Textarea(
-               attrs={
-                  'placeholder' : 'Ingrese una descripción',
-                  'rows': 3,
-                  'cols': 40,
-                }
-            ),
-        }
-        
-class ventasform(ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['valor_venta'].widget.attrs['autofocus'] = True
-
-    class Meta:
-        model = Ventas
-        fields = '__all__'
-        widgets = {
-            'cliente_id_cliente': Select(
-                attrs={
-                    'placeholder': 'Seleccione el cliente',
-                    'class': 'form-control',
-                }
-            ),
-            'cantidad_vendidas': Textarea(
-                attrs={
-                    'placeholder': 'Ingrese la cantidad vendida',
-                    'rows': 3,
-                    'cols': 4,
-                }
-            ),
-        }
-
-class garantiasform(ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['facturacion_id_recibo'].widget.attrs['autofocus'] = True
-
-    class Meta:
-        model = Garantias
-        fields = '__all__'
-        widgets = {
-            'facturacion_id_recibo': TextInput(
-                attrs={
-                    'placeholder': 'Seleccione el recibo',
-                    'class': 'form-control',
-                }
-            ),
-            'cantidad_garantias': Textarea(
-                attrs={
-                    'placeholder': 'Ingrese la cantidad garantías',
-                    'rows': 3,
-                    'cols': 4,
-                }
-            ),
-        }
-
-class productoform(ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['modelo_producto'].widget.attrs['autofocus'] = True
-
-    class Meta:
-        model = Producto
-        fields = '__all__'
-        widgets = {
-            'modelo_producto': TextInput(
-                attrs={
-                    'placeholder': 'escriba el modelo',
-                    'class': 'form-control',
-                }
-            ),
-            'cantidad_producto': Textarea(
-                attrs={
-                    'placeholder': 'Ingrese la cantidad producto',
-                    'rows': 3,
-                    'cols': 4,
-                }
-            ),
-        }
-        
-    
-    
-
-class marcaform(ModelForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        if 'marca' in self.fields:
-            self.fields['marca'].widget.attrs['autofocus'] = True  # Ejemplo con 'marca'
+        self.fields['color'].widget.attrs['autofocus'] = True
 
     class Meta:
         model = Marca
         fields = '__all__'
         widgets = {
-            'color': TextInput(
-                attrs={
-                    'placeholder': 'Ingrese el color',
-                    'class': 'form-control',
-                }
-            ),
-            'marca': TextInput(
-                attrs={
-                    'placeholder': 'Ingrese la marca',
-                    'class': 'form-control',
-                }
-            ),
-            'descripcion': Textarea(
-                attrs={
-                    'placeholder': 'Ingrese una descripción',
-                    'rows': 3,
-                    'cols': 40,
-                }
-            ),
+            'color': TextInput(attrs={'placeholder': 'Ingrese el color'}),
+            'marca': TextInput(attrs={'placeholder': 'Ingrese la marca'}),
+            'descripcion': Textarea(attrs={'placeholder': 'Ingrese una descripción', 'rows': 3, 'cols': 40}),
         }
-        
-    
+
+
+class ProveedorForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['nombre'].widget.attrs['autofocus'] = True
+
+    class Meta:
+        model = Proveedor
+        fields = '__all__'
+        widgets = {
+            'nit_proveedor': TextInput(attrs={'placeholder': 'Ingrese el NIT del proveedor'}),
+            'nombre': TextInput(attrs={'placeholder': 'Ingrese el nombre'}),
+            'cedula': TextInput(attrs={'placeholder': 'Ingrese la cédula'}),
+            'direccion': TextInput(attrs={'placeholder': 'Ingrese la dirección'}),
+            'telefono': TextInput(attrs={'placeholder': 'Ingrese el teléfono'}),
+        }
+
+
+class AdministradorForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['nombre'].widget.attrs['autofocus'] = True
+
+    class Meta:
+        model = Administrador
+        fields = '__all__'
+        widgets = {
+            'nombre': TextInput(attrs={'placeholder': 'Ingrese un nombre'}),
+            'contrasena': PasswordInput(attrs={'placeholder': 'Ingrese la contraseña'}),
+            'correo_electronico': TextInput(attrs={'placeholder': 'Ingrese el correo electrónico'}),
+        }
+
+
+class ProductoForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['nombre_producto'].widget.attrs['autofocus'] = True
+
+    class Meta:
+        model = Producto
+        fields = '__all__'
+        widgets = {
+            'nombre_producto': TextInput(attrs={'placeholder': 'Ingrese el nombre del producto'}),
+            'modelo_producto': TextInput(attrs={'placeholder': 'Ingrese el modelo'}),
+            'cantidad': NumberInput(attrs={'placeholder': 'Ingrese la cantidad'}),
+            'valor_producto': TextInput(attrs={'placeholder': 'Ingrese el valor'}),
+            'diseno': TextInput(attrs={'placeholder': 'Ingrese el diseño'}),
+        }
+
+
+class EquipoForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['modelo'].widget.attrs['autofocus'] = True
+
+    class Meta:
+        model = Equipo
+        fields = '__all__'
+        widgets = {
+            'modelo': TextInput(attrs={'placeholder': 'Ingrese el modelo'}),
+            'clave': TextInput(attrs={'placeholder': 'Ingrese la clave'}),
+        }
+
+
+class TecnicoForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['nombre_completo'].widget.attrs['autofocus'] = True
+
+    class Meta:
+        model = Tecnico
+        fields = '__all__'
+        widgets = {
+            'nombre_completo': TextInput(attrs={'placeholder': 'Ingrese el nombre completo'}),
+            'n_documento': NumberInput(attrs={'placeholder': 'Ingrese el número de documento'}),
+            'n_tel': NumberInput(attrs={'placeholder': 'Ingrese el teléfono'}),
+            'correo': TextInput(attrs={'placeholder': 'Ingrese el correo electrónico'}),
+            'direccion': TextInput(attrs={'placeholder': 'Ingrese la dirección'}),
+            'especialidad': TextInput(attrs={'placeholder': 'Ingrese la especialidad'}),
+            'tipo_tecnico': TextInput(attrs={'placeholder': 'Ingrese el tipo de técnico'}),
+        }
+
+
+class OrdenServicioForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['descripcion_orden'].widget.attrs['autofocus'] = True
+
+    class Meta:
+        model = OrdenServicio
+        fields = '__all__'
+        widgets = {
+            'descripcion_orden': Textarea(attrs={'placeholder': 'Ingrese la descripción', 'rows': 3, 'cols': 40}),
+        }
+
+
+class ServicioTecnicoForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['equipo'].widget.attrs['autofocus'] = True
+
+    class Meta:
+        model = ServicioTecnico
+        fields = '__all__'
+        widgets = {
+            'equipo': TextInput(attrs={'placeholder': 'Ingrese el equipo'}),
+            'descripcion_falla': Textarea(attrs={'placeholder': 'Describa la falla', 'rows': 3, 'cols': 40}),
+            'fecha_ingreso': DateInput(attrs={'type': 'date'}),
+            'fecha_entrega': DateInput(attrs={'type': 'date'}),
+            'estado': TextInput(attrs={'placeholder': 'Ingrese el estado'}),
+        }
+
+
+class VentaForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['fecha_venta'].widget.attrs['autofocus'] = True
+
+    class Meta:
+        model = Venta
+        fields = '__all__'
+        widgets = {
+            'fecha_venta': DateInput(attrs={'type': 'date'}),
+            'cantidad': NumberInput(attrs={'placeholder': 'Ingrese la cantidad'}),
+            'total': NumberInput(attrs={'placeholder': 'Ingrese el total'}),
+        }
+
+
+class ComprasMercanciaForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['cantidad_compras'].widget.attrs['autofocus'] = True
+
+    class Meta:
+        model = ComprasMercancia
+        fields = '__all__'
+        widgets = {
+            'cantidad_compras': NumberInput(attrs={'placeholder': 'Ingrese la cantidad'}),
+            'fecha_compra': DateInput(attrs={'type': 'date'}),
+            'precio_compra': TextInput(attrs={'placeholder': 'Ingrese el precio de compra'}),
+        }
+
+
+class FacturacionForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['fecha'].widget.attrs['autofocus'] = True
+
+    class Meta:
+        model = Facturacion
+        fields = '__all__'
+        widgets = {
+            'fecha': DateInput(attrs={'type': 'date'}),
+            'descripcion_venta': Textarea(attrs={'placeholder': 'Ingrese una descripción', 'rows': 3, 'cols': 40}),
+            'terminos_y_condiciones': Textarea(attrs={'placeholder': 'Ingrese los términos y condiciones', 'rows': 3, 'cols': 40}),
+            'nit_digisoft': TextInput(attrs={'placeholder': 'Ingrese el NIT'}),
+        }
+
+
+class GarantiasForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['facturacion'].widget.attrs['autofocus'] = True
+
+    class Meta:
+        model = Garantias
+        fields = '__all__'

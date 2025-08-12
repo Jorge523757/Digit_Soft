@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Gestión de Marcas{% endblock %}
+{% block title %}Gestión de Órdenes de Servicio{% endblock %}
 
 {% block content %}
 <div class="container mt-4">
@@ -9,27 +9,33 @@
     <div class="col-12">
       <div class="card shadow-sm">
         <div class="card-header bg-primary text-white">
-          <h3 class="card-title mb-0"><i class="fas fa-tag"></i> GESTIÓN DE MARCAS</h3>
+          <h3 class="card-title mb-0"><i class="fas fa-clipboard-list"></i> GESTIÓN DE ÓRDENES DE SERVICIO</h3>
         </div>
         <div class="card-body">
-          <table id="tabla_marcas" class="table table-bordered table-hover w-100">
+          <table id="tabla_ordenes" class="table table-bordered table-hover w-100">
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Nombre</th>
+                <th>Cliente</th>
+                <th>Técnico</th>
+                <th>Fecha de Creación</th>
+                <th>Estado</th>
                 <th>Opciones</th>
               </tr>
             </thead>
             <tbody>
-              {% for marca in object_list %}
+              {% for orden in object_list %}
               <tr>
-                <td>{{ marca.id }}</td>
-                <td>{{ marca.nombre }}</td>
+                <td>{{ orden.id }}</td>
+                <td>{{ orden.cliente }}</td>
+                <td>{{ orden.tecnico }}</td>
+                <td>{{ orden.fecha_creacion }}</td>
+                <td>{{ orden.estado }}</td>
                 <td class="text-center">
-                  <a href="{% url 'apl:marca_editar' marca.id %}" class="btn btn-warning btn-sm" title="Editar">
+                  <a href="{% url 'apl:ordenservicio_editar' orden.id %}" class="btn btn-warning btn-sm" title="Editar">
                     <i class="fas fa-edit"></i>
                   </a>
-                  <a href="{% url 'apl:marca_eliminar' marca.id %}" class="btn btn-danger btn-sm" title="Eliminar">
+                  <a href="{% url 'apl:ordenservicio_eliminar' orden.id %}" class="btn btn-danger btn-sm" title="Eliminar">
                     <i class="fas fa-trash"></i>
                   </a>
                 </td>
@@ -39,7 +45,7 @@
           </table>
         </div>
         <div class="card-footer">
-          <a href="{% url 'apl:marca_crear' %}" class="btn btn-success"><i class="fas fa-plus"></i> Agregar Marca</a>
+          <a href="{% url 'apl:ordenservicio_crear' %}" class="btn btn-success"><i class="fas fa-plus"></i> Agregar Orden de Servicio</a>
         </div>
       </div>
     </div>
@@ -50,7 +56,7 @@
 {% block javascript %}
 <script>
   $(document).ready(function () {
-    $('#tabla_marcas').DataTable({
+    $('#tabla_ordenes').DataTable({
       responsive: true,
       language: {
         "url": "https://cdn.datatables.net/plug-ins/2.0.8/i18n/es-ES.json"

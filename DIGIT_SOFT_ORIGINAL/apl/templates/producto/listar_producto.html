@@ -1,146 +1,69 @@
-{% extends "categoria/plantilla.html" %}
+{% extends "base.html" %}
 {% load static %}
+
+{% block title %}Gestión de Productos{% endblock %}
+
 {% block content %}
-<br><br><br><br><br><br><br><br><br>
-
-<div class="col-md-12">
-<<<<<<< HEAD
-  <div class="card card-default">
-    <div class="card-header">
-      <h3 class="card-title">
-        <i class="fas fa-tools"></i> SERVICIO TÉCNICO DIGIT SOFT
-      </h3>
-    </div>
-
-    <div class="card-body">
-      <div class="row">
-        <div class="col-12">
-          <div class="card">
-            <div class="card-header">
-              <h3 class="card-title">GESTIÓN SERVICIO TÉCNICO</h3>
-            </div>
-
-            <div class="card-body table-responsive p-0">
-              <div class="col-sm-12">
-                <table id="tabla_servicios" class="table table-bordered table-hover dataTable dtr-inline">
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Cliente</th>
-                      <th>Técnico</th>
-                      <th>Orden de Servicio</th>
-                      <th>Tel. Cliente</th>
-                      <th>Tel. Técnico</th>
-                      <th>Correo</th>
-                      <th>OPCIONES</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for s in servicios %}
-                    <tr>
-                      <td>{{ s.id_servicio_tecnico }}</td>
-                      <td>{{ s.cliente_id_cliente }}</td>
-                      <td>{{ s.tecnicos_id_tecnico }}</td>
-                      <td>{{ s.orden_servicio_id_orden_servicio }}</td>
-                      <td>{{ s.telefono_cliente_registro }}</td>
-                      <td>{{ s.telefono_tecnico_asignado_registro }}</td>
-                      <td>{{ s.correo_cliente_registro }}</td>
-                      <td>
-                        <a href="{% url 'apl:servicio_editar' s.id_servicio_tecnico %}" class="btn btn-primary btn-xs">
-                          <i class="fas fa-edit"></i>
-                        </a>
-                        <a href="{% url 'apl:servicio_eliminar' s.id_servicio_tecnico %}" class="btn btn-danger btn-xs">
-                          <i class="fas fa-trash"></i>
-                        </a>
-                      </td>
-                    </tr>
-                    {% endfor %}
-                  </tbody>
-                </table>
-                <div class="card-footer">
-                  <a href="{% url 'apl:servicio_crear' %}" class="btn btn-success btn btn-xs">
-                    <i class="fas fa-plus-circle"></i> Agregar
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <script>
-              $(document).ready(function () {
-                $('#tabla_servicios').DataTable();
-              });
-            </script>
-=======
-    <div class="card card-default">
-        <div class="card-header">
-            <h3 class="card-title">
-                <i class="fas fa-box"></i> GESTIÓN DE PRODUCTOS DIGIT SOFT
-            </h3>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h3 class="card-title mb-0"><i class="fas fa-box-open"></i> GESTIÓN DE PRODUCTOS</h3>
         </div>
-
         <div class="card-body">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">LISTA DE PRODUCTOS</h3>
-                        </div>
-
-                        <div class="card-body table-responsive p-0">
-                            <div class="col-sm-12">
-                                <table id="tabla_productos" class="table table-bordered table-hover dataTable dtr-inline">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Nombre</th>
-                                            <th>Descripción</th>
-                                            <th>Precio</th>
-                                            <th>Stock</th>
-                                            <th>Categoría</th>
-                                            <th>Marca</th>
-                                            <th>Opciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for p in productos %}
-                                        <tr>
-                                            <td>{{ p.id_producto }}</td>
-                                            <td>{{ p.nombre_producto }}</td>
-                                            <td>{{ p.descripcion }}</td>
-                                            <td>{{ p.precio }}</td>
-                                            <td>{{ p.stock }}</td>
-                                            <td>{{ p.categoria_id_categoria }}</td>
-                                            <td>{{ p.marca_id_marca }}</td>
-                                            <td>
-                                                <a href="{% url 'apl:producto_editar' p.id_producto %}" class="btn btn-primary btn-xs">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                                <a href="{% url 'apl:producto_eliminar' p.id_producto %}" class="btn btn-danger btn-xs">
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                                <div class="card-footer">
-                                    <a href="{% url 'apl:producto_crear' %}" class="btn btn-success btn btn-xs">
-                                        <i class="fas fa-plus-circle"></i> Agregar
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <script>
-                            $(document).ready(function () {
-                                $('#tabla_productos').DataTable();
-                            });
-                        </script>
-                    </div>
-                </div>
-            </div>
+          <table id="tabla_productos" class="table table-bordered table-hover w-100">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Marca</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Opciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for producto in object_list %}
+              <tr>
+                <td>{{ producto.id }}</td>
+                <td>{{ producto.nombre }}</td>
+                <td>{{ producto.marca }}</td>
+                <td>{{ producto.descripcion }}</td>
+                <td>${{ producto.precio }}</td>
+                <td>{{ producto.stock }}</td>
+                <td class="text-center">
+                  <a href="{% url 'apl:producto_editar' producto.id %}" class="btn btn-warning btn-sm" title="Editar">
+                    <i class="fas fa-edit"></i>
+                  </a>
+                  <a href="{% url 'apl:producto_eliminar' producto.id %}" class="btn btn-danger btn-sm" title="Eliminar">
+                    <i class="fas fa-trash"></i>
+                  </a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
         </div>
+        <div class="card-footer">
+          <a href="{% url 'apl:producto_crear' %}" class="btn btn-success"><i class="fas fa-plus"></i> Agregar Producto</a>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
->>>>>>> 929d21c (Commit Modulos Jorge)
+{% endblock %}
+
+{% block javascript %}
+<script>
+  $(document).ready(function () {
+    $('#tabla_productos').DataTable({
+      responsive: true,
+      language: {
+        "url": "https://cdn.datatables.net/plug-ins/2.0.8/i18n/es-ES.json"
+      }
+    });
+  });
+</script>
 {% endblock %}

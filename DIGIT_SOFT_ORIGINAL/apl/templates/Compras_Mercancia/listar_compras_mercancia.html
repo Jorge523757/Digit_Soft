@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Gestión de Compras de Mercancía{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h3 class="card-title mb-0"><i class="fas fa-shopping-cart"></i> GESTIÓN DE COMPRAS DE MERCANCÍA</h3>
+        </div>
+        <div class="card-body">
+          <table id="tabla_compras" class="table table-bordered table-hover w-100">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Fecha de Compra</th>
+                <th>Proveedor</th>
+                <th>Administrador</th>
+                <th>Precio de Compra</th>
+                <th>Opciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for compra in object_list %}
+              <tr>
+                <td>{{ compra.id }}</td>
+                <td>{{ compra.producto }}</td>
+                <td>{{ compra.cantidad_compras }}</td>
+                <td>{{ compra.fecha_compra }}</td>
+                <td>{{ compra.proveedor }}</td>
+                <td>{{ compra.administrador }}</td>
+                <td>{{ compra.precio_compra }}</td>
+                <td class="text-center">
+                  <a href="{% url 'apl:comprasmercancia_editar' compra.id %}" class="btn btn-warning btn-sm" title="Editar">
+                    <i class="fas fa-edit"></i>
+                  </a>
+                  <a href="{% url 'apl:comprasmercancia_eliminar' compra.id %}" class="btn btn-danger btn-sm" title="Eliminar">
+                    <i class="fas fa-trash"></i>
+                  </a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer">
+          <a href="{% url 'apl:comprasmercancia_crear' %}" class="btn btn-success"><i class="fas fa-plus"></i> Agregar Compra</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+  $(document).ready(function () {
+    $('#tabla_compras').DataTable({
+      responsive: true,
+      language: {
+        "url": "https://cdn.datatables.net/plug-ins/2.0.8/i18n/es-ES.json"
+      }
+    });
+  });
+</script>
+{% endblock %}

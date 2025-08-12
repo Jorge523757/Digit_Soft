@@ -58,10 +58,10 @@
     <td>{{ c.nit_digitsoft }}</td>
     <!-- Aquí se agregan los botones de editar y eliminar -->
       <td>
-      <a href="{% url 'apl:facturacion_editar' c.id_recibo %}" class="btn btn-primary btn-xs">
+      <a href="{% url 'apl:administrador_editar' c.id %}" class="btn btn-primary btn-xs">
         <i class="fas fa-edit"></i>
       </a>
-      <a href="{% url 'apl:facturacion_eliminar' c.id_recibo %}" class="btn btn-danger btn-xs">
+      <a href="{% url 'apl:administrador_eliminar' c.id %}" class="btn btn-danger btn-xs">
         <i class="fas fa-trash"></i>
       </a>
     </td>
@@ -69,6 +69,9 @@
   {% endfor %}
 </tbody>
 
+       
+    
+     
     </table>
      <div class="card-footer">
         <a href="{{crear_ruta_url}}" class="btn btn-primary btn btn-xs"><i class="fas fa-edit"></i>Agregar</a>
