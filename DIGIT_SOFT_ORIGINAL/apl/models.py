@@ -110,8 +110,8 @@ class ServicioTecnico(models.Model):
 
 class Venta(models.Model):
     id_venta = models.AutoField(primary_key=True)
-    cliente = models.ForeignKey('Cliente', on_delete=models.CASCADE)
-    producto = models.ForeignKey('Producto', on_delete=models.CASCADE)
+    cliente = models.ForeignKey('Cliente', on_delete=models.SET_NULL, null=True, blank=True)
+    producto = models.ForeignKey('Producto', on_delete=models.SET_NULL, null=True , blank=True)
     fecha_venta = models.DateField()
     cantidad = models.PositiveIntegerField()
     total = models.DecimalField(max_digits=10, decimal_places=2)

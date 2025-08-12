@@ -25,7 +25,7 @@
                 <th>Cliente</th>
                 <th>Fecha de Venta</th>
                 <th>Total</th>
-                <th>Estado</th>
+                <th>Cantidad</th> 
                 <th>Opciones</th>
               </tr>
             </thead>
@@ -36,7 +36,7 @@
                 <td>{{ venta.cliente }}</td>
                 <td>{{ venta.fecha_venta }}</td>
                 <td>${{ venta.total }}</td>
-                <td>{{ venta.estado }}</td>
+                <td>{{ venta.cantidad }}</td>
                 <td class="text-center">
                   {% if venta.id %}
                   <a href="{% url 'apl:venta_editar' venta.id %}" class="btn btn-warning btn-sm" title="Editar">
@@ -45,8 +45,7 @@
                   <a href="{% url 'apl:venta_eliminar' venta.id %}" class="btn btn-danger btn-sm" title="Eliminar">
                     <i class="fas fa-trash"></i>
                   </a>
-                  {% else %}
-                  <span class="text-danger">ID no encontrado</span>
+                  
                   {% endif %}
                 </td>
               </tr>
