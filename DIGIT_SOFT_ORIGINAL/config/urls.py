@@ -21,6 +21,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('prueba/', include('apl.urls', namespace='apl')),   # Example path to the view
-    
+   # path('proyect/', include('apl.urls', namespace='apl')),   # Example path to the view
+    path('', include('apl.urls', namespace='apl')),
 ]
