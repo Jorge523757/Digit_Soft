@@ -26,6 +26,8 @@
                                 <th>ID DE VENTA</th>
                                 <th>DESCRIPCION DE LA VENTA</th>
                                 <th>NIT DIGISOFT</th>
+                                <th>ID ADMINISTRADOR</th>
+                                <th>ORDEN  DE SERVICIO</th>
                                 <th>Opciones</th>
                             </tr>
                         </thead>
@@ -36,18 +38,18 @@
                                 <td>{{ facturacion.fecha }}</td>
                                 <td>{{ facturacion.venta.id }}</td>
                                 <td>{{ facturacion.descripcion_venta }}</td>
+                                <td>{{ facturacion.terminos_y_condiciones }}</td>
+                                <td>{{ facturacion.descripcion_venta }}</td>
                                 <td>{{ facturacion.nit_digisoft }}</td>
+                                <td>{{ facturacion.administrador.id }}</td>
+                                <td>{{ facturacion.orden_servicio }}</td>
                                 <td class="text-center">
-                                    {% if facturacion.id_recibo %}
                                     <button class="btn btn-warning btn-sm" title="Editar" onclick="alertaEditar('{% url 'apl:facturacion_editar' facturacion.id_recibo %}')">
                                         <i class="fas fa-edit"></i>
                                     </button>
                                     <button class="btn btn-danger btn-sm" title="Eliminar" onclick="alertaEliminar('{% url 'apl:facturacion_eliminar' facturacion.id_recibo %}')">
                                         <i class="fas fa-trash"></i>
                                     </button>
-                                    {% else %}
-                                    <span class="text-danger">ID no encontrado</span>
-                                    {% endif %}
                                 </td>
                             </tr>
                             {% empty %}
