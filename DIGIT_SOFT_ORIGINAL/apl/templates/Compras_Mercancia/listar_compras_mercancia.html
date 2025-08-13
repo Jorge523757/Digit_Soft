@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Gestión de Productos{% endblock %}
+{% block title %}Gestión de Compras de Mercancía{% endblock %}
 
 {% block content %}
 <div class="container mt-4">
@@ -15,36 +15,38 @@
                     <br>
                     <br>
                     <br>
-                    <h3 class="card-title mb-0"><i class="fas fa-box-open"></i> GESTIÓN DE PRODUCTOS</h3>
+                    <h3 class="card-title mb-0"><i class="fas fa-shopping-cart"></i> GESTIÓN DE COMPRAS DE MERCANCÍA</h3>
                 </div>
                 <div class="card-body">
-                    <table id="tabla_productos" class="table table-bordered table-hover w-100">
+                    <table id="tabla_compras" class="table table-bordered table-hover w-100">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Marca</th>
-                                <th>Descripción</th>
-                                <th>Precio</th>
-                                <th>Stock</th>
+                                <th>Producto</th>
+                                <th>Cantidad</th>
+                                <th>Fecha de Compra</th>
+                                <th>Proveedor</th>
+                                <th>Administrador</th>
+                                <th>Precio de Compra</th>
                                 <th>Opciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for producto in object_list %}
+                            {% for compra in object_list %}
                             <tr>
-                                <td>{{ producto.id }}</td>
-                                <td>{{ producto.nombre }}</td>
-                                <td>{{ producto.marca }}</td>
-                                <td>{{ producto.descripcion }}</td>
-                                <td>${{ producto.precio }}</td>
-                                <td>{{ producto.stock }}</td>
+                                <td>{{ compra.id }}</td>
+                                <td>{{ compra.producto }}</td>
+                                <td>{{ compra.cantidad_compras }}</td>
+                                <td>{{ compra.fecha_compra }}</td>
+                                <td>{{ compra.proveedor }}</td>
+                                <td>{{ compra.administrador }}</td>
+                                <td>{{ compra.precio_compra }}</td>
                                 <td class="text-center">
-                                    {% if producto.id %}
-                                    <button class="btn btn-warning btn-sm" title="Editar" onclick="alertaEditar('{% url 'apl:producto_editar' producto.id %}')">
+                                    {% if compra.id %}
+                                    <button class="btn btn-warning btn-sm" title="Editar" onclick="alertaEditar('{% url 'apl:comprasmercancia_editar' compra.id %}')">
                                         <i class="fas fa-edit"></i>
                                     </button>
-                                    <button class="btn btn-danger btn-sm" title="Eliminar" onclick="alertaEliminar('{% url 'apl:producto_eliminar' producto.id %}')">
+                                    <button class="btn btn-danger btn-sm" title="Eliminar" onclick="alertaEliminar('{% url 'apl:comprasmercancia_eliminar' compra.id %}')">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                     {% else %}
@@ -54,21 +56,19 @@
                             </tr>
                             {% empty %}
                             <tr>
-                                <td colspan="7" class="text-center">No hay productos registrados.</td>
+                                <td colspan="8" class="text-center">No hay compras de mercancía registradas.</td>
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
                 <div class="card-footer">
-                    <a href="{% url 'apl:producto_crear' %}" class="btn btn-success"><i class="fas fa-plus"></i> Agregar Producto</a>
+                    <a href="{% url 'apl:comprasmercancia_crear' %}" class="btn btn-success"><i class="fas fa-plus"></i> Agregar Compra</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<<<<<<< HEAD
-=======
 {% endblock %}
 
 {% block javascript %}
@@ -109,7 +109,7 @@
     }
 
     $(document).ready(function () {
-        $('#tabla_productos').DataTable({
+        $('#tabla_compras').DataTable({
             responsive: true,
             language: {
                 "url": "https://cdn.datatables.net/plug-ins/2.0.8/i18n/es-ES.json"
@@ -117,5 +117,4 @@
         });
     });
 </script>
->>>>>>> 8a7086eb60eed25f2e9073c9099ea59512ae7595
 {% endblock %}

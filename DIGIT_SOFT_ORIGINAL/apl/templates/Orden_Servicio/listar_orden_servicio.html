@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Gestión de Productos{% endblock %}
+{% block title %}Gestión de Órdenes de Servicio{% endblock %}
 
 {% block content %}
 <div class="container mt-4">
@@ -15,36 +15,34 @@
                     <br>
                     <br>
                     <br>
-                    <h3 class="card-title mb-0"><i class="fas fa-box-open"></i> GESTIÓN DE PRODUCTOS</h3>
+                    <h3 class="card-title mb-0"><i class="fas fa-clipboard-list"></i> GESTIÓN DE ÓRDENES DE SERVICIO</h3>
                 </div>
                 <div class="card-body">
-                    <table id="tabla_productos" class="table table-bordered table-hover w-100">
+                    <table id="tabla_ordenes" class="table table-bordered table-hover w-100">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Marca</th>
+                                <th>Cliente</th>
+                                <th>Técnico</th>
                                 <th>Descripción</th>
-                                <th>Precio</th>
-                                <th>Stock</th>
+                                <th>Estado</th>
                                 <th>Opciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for producto in object_list %}
+                            {% for ordenServicio in object_list %}
                             <tr>
-                                <td>{{ producto.id }}</td>
-                                <td>{{ producto.nombre }}</td>
-                                <td>{{ producto.marca }}</td>
-                                <td>{{ producto.descripcion }}</td>
-                                <td>${{ producto.precio }}</td>
-                                <td>{{ producto.stock }}</td>
+                                <td>{{ ordenServicio.id_ordenServicio }}</td>
+                                <td>{{ ordenServicio.cliente }}</td>
+                                <td>{{ ordenServicio.tecnico }}</td>
+                                <td>{{ ordenServicio.descripcion_orden }}</td>
+                                <td>{{ ordenServicio.get_estado_display }}</td>
                                 <td class="text-center">
-                                    {% if producto.id %}
-                                    <button class="btn btn-warning btn-sm" title="Editar" onclick="alertaEditar('{% url 'apl:producto_editar' producto.id %}')">
+                                    {% if ordenServicio.id_ordenServicio %}
+                                    <button class="btn btn-warning btn-sm" title="Editar" onclick="alertaEditar('{% url 'apl:ordenservicio_editar' ordenServicio.id_ordenServicio %}')">
                                         <i class="fas fa-edit"></i>
                                     </button>
-                                    <button class="btn btn-danger btn-sm" title="Eliminar" onclick="alertaEliminar('{% url 'apl:producto_eliminar' producto.id %}')">
+                                    <button class="btn btn-danger btn-sm" title="Eliminar" onclick="alertaEliminar('{% url 'apl:ordenservicio_eliminar' ordenServicio.id_ordenServicio %}')">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                     {% else %}
@@ -54,21 +52,19 @@
                             </tr>
                             {% empty %}
                             <tr>
-                                <td colspan="7" class="text-center">No hay productos registrados.</td>
+                                <td colspan="6" class="text-center">No hay órdenes de servicio registradas.</td>
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
                 <div class="card-footer">
-                    <a href="{% url 'apl:producto_crear' %}" class="btn btn-success"><i class="fas fa-plus"></i> Agregar Producto</a>
+                    <a href="{% url 'apl:ordenservicio_crear' %}" class="btn btn-success"><i class="fas fa-plus"></i> Agregar Orden de Servicio</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<<<<<<< HEAD
-=======
 {% endblock %}
 
 {% block javascript %}
@@ -109,7 +105,7 @@
     }
 
     $(document).ready(function () {
-        $('#tabla_productos').DataTable({
+        $('#tabla_ordenes').DataTable({
             responsive: true,
             language: {
                 "url": "https://cdn.datatables.net/plug-ins/2.0.8/i18n/es-ES.json"
@@ -117,5 +113,4 @@
         });
     });
 </script>
->>>>>>> 8a7086eb60eed25f2e9073c9099ea59512ae7595
 {% endblock %}

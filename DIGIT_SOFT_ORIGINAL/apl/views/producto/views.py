@@ -1,12 +1,3 @@
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
-from django.urls import reverse_lazy
-
-from .models import Producto
-from .forms import productoform
-
 from django import forms
 from django.views.generic import ListView, CreateView,UpdateView,DeleteView
 from apl.views.producto.views import *
@@ -78,3 +69,4 @@ class productoDeleteView(DeleteView):
         context['entidad'] = 'producto'
         context['listar_url'] = reverse_lazy('apl:producto_eliminar')
         return context
+    

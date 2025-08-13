@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Gestión de Productos{% endblock %}
+{% block title %}Gestión de Clientes{% endblock %}
 
 {% block content %}
 <div class="container mt-4">
@@ -15,36 +15,36 @@
                     <br>
                     <br>
                     <br>
-                    <h3 class="card-title mb-0"><i class="fas fa-box-open"></i> GESTIÓN DE PRODUCTOS</h3>
+                    <h3 class="card-title mb-0"><i class="fas fa-users"></i> GESTIÓN DE CLIENTES</h3>
                 </div>
                 <div class="card-body">
-                    <table id="tabla_productos" class="table table-bordered table-hover w-100">
+                    <table id="tabla_clientes" class="table table-bordered table-hover w-100">
                         <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Nombre</th>
-                                <th>Marca</th>
-                                <th>Descripción</th>
-                                <th>Precio</th>
-                                <th>Stock</th>
+                                <th>Número de Documento</th>
+                                <th>Teléfono</th>
+                                <th>Correo Electrónico</th>
+                                <th>Dirección</th>
                                 <th>Opciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for producto in object_list %}
+                            {% for cliente in object_list %}
                             <tr>
-                                <td>{{ producto.id }}</td>
-                                <td>{{ producto.nombre }}</td>
-                                <td>{{ producto.marca }}</td>
-                                <td>{{ producto.descripcion }}</td>
-                                <td>${{ producto.precio }}</td>
-                                <td>{{ producto.stock }}</td>
+                                <td>{{ cliente.id }}</td>
+                                <td>{{ cliente.nombre }}</td>
+                                <td>{{ cliente.numero_documento }}</td>
+                                <td>{{ cliente.numero_telefonico }}</td>
+                                <td>{{ cliente.correo_electronico }}</td>
+                                <td>{{ cliente.direccion }}</td>
                                 <td class="text-center">
-                                    {% if producto.id %}
-                                    <button class="btn btn-warning btn-sm" title="Editar" onclick="alertaEditar('{% url 'apl:producto_editar' producto.id %}')">
+                                    {% if cliente.id %}
+                                    <button class="btn btn-warning btn-sm" title="Editar" onclick="alertaEditar('{% url 'apl:cliente_editar' cliente.id %}')">
                                         <i class="fas fa-edit"></i>
                                     </button>
-                                    <button class="btn btn-danger btn-sm" title="Eliminar" onclick="alertaEliminar('{% url 'apl:producto_eliminar' producto.id %}')">
+                                    <button class="btn btn-danger btn-sm" title="Eliminar" onclick="alertaEliminar('{% url 'apl:cliente_eliminar' cliente.id %}')">
                                         <i class="fas fa-trash"></i>
                                     </button>
                                     {% else %}
@@ -54,21 +54,19 @@
                             </tr>
                             {% empty %}
                             <tr>
-                                <td colspan="7" class="text-center">No hay productos registrados.</td>
+                                <td colspan="7" class="text-center">No hay clientes registrados.</td>
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
                 <div class="card-footer">
-                    <a href="{% url 'apl:producto_crear' %}" class="btn btn-success"><i class="fas fa-plus"></i> Agregar Producto</a>
+                    <a href="{% url 'apl:cliente_crear' %}" class="btn btn-success"><i class="fas fa-plus"></i> Agregar Cliente</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<<<<<<< HEAD
-=======
 {% endblock %}
 
 {% block javascript %}
@@ -109,7 +107,7 @@
     }
 
     $(document).ready(function () {
-        $('#tabla_productos').DataTable({
+        $('#tabla_clientes').DataTable({
             responsive: true,
             language: {
                 "url": "https://cdn.datatables.net/plug-ins/2.0.8/i18n/es-ES.json"
@@ -117,5 +115,4 @@
         });
     });
 </script>
->>>>>>> 8a7086eb60eed25f2e9073c9099ea59512ae7595
 {% endblock %}
