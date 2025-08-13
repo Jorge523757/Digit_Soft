@@ -25,6 +25,7 @@
                                 <th>FECHA</th>
                                 <th>ID DE VENTA</th>
                                 <th>DESCRIPCION DE LA VENTA</th>
+                                <th>TERMINOS Y CONDICIONES</th>
                                 <th>NIT DIGISOFT</th>
                                 <th>ID ADMINISTRADOR</th>
                                 <th>ORDEN  DE SERVICIO</th>
@@ -36,12 +37,11 @@
                             <tr>
                                 <td>{{ facturacion.id_recibo }}</td>
                                 <td>{{ facturacion.fecha }}</td>
-                                <td>{{ facturacion.venta.id }}</td>
+                                <td>{{ facturacion.venta.pk }}</td>
                                 <td>{{ facturacion.descripcion_venta }}</td>
                                 <td>{{ facturacion.terminos_y_condiciones }}</td>
-                                <td>{{ facturacion.descripcion_venta }}</td>
                                 <td>{{ facturacion.nit_digisoft }}</td>
-                                <td>{{ facturacion.administrador.id }}</td>
+                                <td>{{ facturacion.administrador.pk }}</td>
                                 <td>{{ facturacion.orden_servicio }}</td>
                                 <td class="text-center">
                                     <button class="btn btn-warning btn-sm" title="Editar" onclick="alertaEditar('{% url 'apl:facturacion_editar' facturacion.id_recibo %}')">
@@ -54,7 +54,7 @@
                             </tr>
                             {% empty %}
                             <tr>
-                                <td colspan="6" class="text-center">Ningún dato disponible en esta tabla</td>
+                                <td colspan="9" class="text-center">no hay datos papito toca que le meta al trabajo</td>
                             </tr>
                             {% endfor %}
                         </tbody>

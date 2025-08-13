@@ -138,12 +138,12 @@ class ComprasMercancia(models.Model):
 class Facturacion(models.Model):
     id_recibo = models.AutoField(primary_key=True)
     fecha = models.DateField()
-    venta = models.ForeignKey('Venta', on_delete=models.CASCADE)
-    descripcion_venta = models.CharField(max_length=50)
+    venta = models.ForeignKey('Venta', on_delete=models.CASCADE,null=True, blank=True)
+    descripcion_venta = models.CharField(max_length=50,null=True, blank=True)
     terminos_y_condiciones = models.CharField(max_length=250)
     nit_digisoft = models.CharField(max_length=50)
-    administrador = models.ForeignKey('Administrador', on_delete=models.CASCADE)
-    orden_servicio = models.ForeignKey('OrdenServicio', on_delete=models.CASCADE)
+    administrador = models.ForeignKey('Administrador', on_delete=models.CASCADE,null=True, blank=True)
+    orden_servicio = models.ForeignKey('OrdenServicio', on_delete=models.CASCADE,null=True, blank=True)
 
     def __str__(self):
         return f"Factura {self.id_recibo}"
