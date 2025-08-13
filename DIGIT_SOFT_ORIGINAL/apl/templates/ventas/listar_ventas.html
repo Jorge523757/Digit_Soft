@@ -23,30 +23,34 @@
               <tr>
                 <th>ID</th>
                 <th>Cliente</th>
+                <th>Producto</th>
                 <th>Fecha de Venta</th>
                 <th>Total</th>
-                <th>Cantidad</th> 
+                <th>Estado</th>
                 <th>Opciones</th>
               </tr>
             </thead>
             <tbody>
               {% for venta in object_list %}
               <tr>
-                <td>{{ venta.id }}</td>
+                <td>{{ venta.id_venta }}</td>
                 <td>{{ venta.cliente }}</td>
+                <td>{{ venta.producto }}</td>
                 <td>{{ venta.fecha_venta }}</td>
                 <td>${{ venta.total }}</td>
-                <td>{{ venta.cantidad }}</td>
+                <td>{{ venta.estado }}</td>
+
                 <td class="text-center">
-                  {% if venta.id %}
-                  <a href="{% url 'apl:venta_editar' venta.id %}" class="btn btn-warning btn-sm" title="Editar">
+                 
+                  <a href="{% url 'apl:venta_editar' venta.id_venta %}" class="btn btn-warning btn-sm" title="Editar">
                     <i class="fas fa-edit"></i>
                   </a>
-                  <a href="{% url 'apl:venta_eliminar' venta.id %}" class="btn btn-danger btn-sm" title="Eliminar">
+                  <a href="{% url 'apl:venta_eliminar' venta.id_venta %}" class="btn btn-danger btn-sm" title="Eliminar">
                     <i class="fas fa-trash"></i>
                   </a>
-                  
-                  {% endif %}
+                 
+             
+                
                 </td>
               </tr>
               {% empty %}
