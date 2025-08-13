@@ -42,29 +42,18 @@
                                 <td>{{ facturacion.fecha }}</td>
                                 <td>{{ facturacion.venta.pk }}</td>
                                 <td>{{ facturacion.descripcion_venta }}</td>
-<<<<<<< HEAD
                                 <td>{{ facturacion.nit_digisoft }}</td>
                                 <td class="text-center">
                                     {% if facturacion.id_recibo %}
-=======
-                                <td>{{ facturacion.terminos_y_condiciones }}</td>
-                                <td>{{ facturacion.nit_digisoft }}</td>
-                                <td>{{ facturacion.administrador.pk }}</td>
-                                <td>{{ facturacion.orden_servicio }}</td>
-                                <td class="text-center">
->>>>>>> 90af74bb5bf0f02b0e26c6faf83b30d6a4b7fb72
                                     <button class="btn btn-warning btn-sm" title="Editar" onclick="alertaEditar('{% url 'apl:facturacion_editar' facturacion.id_recibo %}')">
                                         <i class="fas fa-edit"></i>
                                     </button>
                                     <button class="btn btn-danger btn-sm" title="Eliminar" onclick="alertaEliminar('{% url 'apl:facturacion_eliminar' facturacion.id_recibo %}')">
                                         <i class="fas fa-trash"></i>
                                     </button>
-<<<<<<< HEAD
                                     {% else %}
                                     <span class="text-danger">ID no encontrado</span>
                                     {% endif %}
-=======
->>>>>>> 90af74bb5bf0f02b0e26c6faf83b30d6a4b7fb72
                                 </td>
                             </tr>
                             {% empty %}
