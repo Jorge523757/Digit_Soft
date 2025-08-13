@@ -22,9 +22,7 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Color</th>
-                                 <th>marca</th>
-                                  <th>descripcion</th>
+                                <th>Nombre</th>
                                 <th>Opciones</th>
                             </tr>
                         </thead>
@@ -32,18 +30,20 @@
                             {% for marca in object_list %}
                             <tr>
                                 <td>{{ marca.id }}</td>
+
+                                <td>{{ marca.nombre }}</td>
+                                <td class="text-center">
+                                    {% if marca.id %}
+
                                 <td>{{ marca.color }}</td>
-                                <td>{{ marca.marca }}</td>
                                 <td>{{ marca.descripcion }}</td>
                                 <td class="text-center">
                                   
-                                    <button class="btn btn-warning btn-sm" title="Editar" onclick="alertaEditar('{% url 'apl:marca_editar' marca.id %}')">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm" title="Eliminar" onclick="alertaEliminar('{% url 'apl:marca_eliminar' marca.id %}')">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                        
+
+                                    {% else %}
+                                    <span class="text-danger">ID no encontrado</span>
+                                    {% endif %}
+
                                 </td>
                             </tr>
                             {% empty %}
