@@ -31,7 +31,11 @@
 
    .btn {
        display: inline-block;
+<<<<<<< HEAD
        background: #037dc4;
+=======
+       background: #0350c4;
+>>>>>>> 90af74bb5bf0f02b0e26c6faf83b30d6a4b7fb72
        color: white;
        padding: 10px 20px;
        border-radius: 5px;
