@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema DataTables - DigitSoft</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/jquery.dataTables.min.css">
+    <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js"></script>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            background-color: #1a1d29;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .sidebar {
+            background-color: #252837;
+            min-height: 100vh;
+            width: 250px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            padding: 20px 0;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+        }
+        
+        .sidebar .nav-item {
+            margin: 5px 15px;
+        }
+        
+        .sidebar .nav-link {
+            color: #9ca3af;
+            padding: 12px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active {
+            background-color: #3b82f6;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .sidebar .nav-link i {
+            margin-right: 10px;
+            width: 20px;
+        }
+        
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        
+        .card {
+            background-color: #252837;
+            border: 1px solid #374151;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .card-header {
+            background-color: #374151;
+            border-bottom: 1px solid #4b5563;
+            color: white;
+            font-weight: 600;
+            padding: 15px 20px;
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        
+        .dataTables_wrapper {
+            color: #ffffff;
+        }
+        
+        .dataTables_wrapper .dataTables_filter input,
+        .dataTables_wrapper .dataTables_length select {
+            background-color: #374151;
+            border: 1px solid #4b5563;
+            color: white;
+            padding: 8px;
+            border-radius: 4px;
+            margin-left: 10px;
+        }
+        
+        .dataTables_wrapper .dataTables_info,
+        .dataTables_wrapper .dataTables_paginate {
+            color: #9ca3af;
+        }
+        
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+            background-color: #374151;
+            border: 1px solid #4b5563;
+            color: white !important;
+            margin: 0 2px;
+        }
+        
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background-color: #3b82f6;
+            border-color: #3b82f6;
+        }
+        
+        table.dataTable thead th {
+            background-color: #374151;
+            color: white;
+            border-bottom: 2px solid #4b5563;
+            padding: 12px 8px;
+        }
+        
+        table.dataTable tbody tr {
+            background-color: #252837;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        table.dataTable tbody tr:hover {
+            background-color: #374151;
+        }
+        
+        table.dataTable tbody tr.selected {
+            background-color: #3b82f6 !important;
+        }
+        
+        table.dataTable tbody td {
+            border-bottom: 1px solid #374151;
+            color: #ffffff;
+            padding: 10px 8px;
+        }
+        
+        .btn-primary {
+            background-color: #3b82f6;
+            border-color: #3b82f6;
+        }
+        
+        .btn-success {
+            background-color: #10b981;
+            border-color: #10b981;
+        }
+        
+        .btn-warning {
+            background-color: #f59e0b;
+            border-color: #f59e0b;
+        }
+        
+        .btn-danger {
+            background-color: #ef4444;
+            border-color: #ef4444;
+        }
+        
+        .metric-card {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border-radius: 12px;
+            padding: 20px;
+            color: white;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .metric-label {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .table-actions {
+            margin-bottom: 15px;
+        }
+        
+        .badge {
+            font-size: 0.8em;
+        }
+        
+        .status-active { background-color: #10b981; }
+        .status-inactive { background-color: #ef4444; }
+        .status-pending { background-color: #f59e0b; }
+        
+        .filter-section {
+            background-color: #374151;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .filter-section h6 {
+            color: #3b82f6;
+            margin-bottom: 10px;
+        }
+        
+        #selectedInfo {
+            background-color: #374151;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .modal-content {
+            background-color: #252837;
+            color: #ffffff;
+            border: 1px solid #374151;
+        }
+        
+        .modal-header, .modal-footer {
+            border-color: #374151;
+        }
+        
+        .form-control, .form-control:focus {
+            background-color: #374151;
+            border: 1px solid #4b5563;
+            color: white;
+        }
+        
+        .form-control::placeholder {
+            color: #9ca3af;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="p-3 text-center">
+            <h3 class="text-white mb-2" style="font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
+                <i class="fas fa-microchip text-primary"></i> DigitSoft
+            </h3>
+            <p class="text-muted mb-4" style="font-size: 0.8rem;">Sistema de Gestión Integral</p>
+        </div>
+        
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link active" href="#" data-tab="dashboard">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-tab="clientes">
+                    <i class="fas fa-users"></i> Clientes
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-tab="productos">
+                    <i class="fas fa-box"></i> Productos
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-tab="marcas">
+                    <i class="fas fa-tags"></i> Marcas
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-tab="proveedores">
+                    <i class="fas fa-truck"></i> Proveedores
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-tab="ventas">
+                    <i class="fas fa-shopping-cart"></i> Ventas
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-tab="compras">
+                    <i class="fas fa-shopping-basket"></i> Compras
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-tab="tecnicos">
+                    <i class="fas fa-tools"></i> Técnicos
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-tab="servicios">
+                    <i class="fas fa-wrench"></i> Servicios Técnicos
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-tab="equipos">
+                    <i class="fas fa-laptop"></i> Equipos
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="toggleGlobalSearch()">
+                    <i class="fas fa-search"></i> Búsqueda Global
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-tab="facturacion">
+                    <i class="fas fa-file-invoice"></i> Facturación
+                </a>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="main-content">
+        <div id="dashboard" class="tab-content active">
+            <h2 class="mb-4">Dashboard Principal</h2>
+            
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="metric-card">
+                        <div class="metric-value" id="totalClientes">124</div>
+                        <div class="metric-label">Total Clientes</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="metric-card" style="background: linear-gradient(135deg, #10b981, #059669);">
+                        <div class="metric-value" id="totalProductos">89</div>
+                        <div class="metric-label">Total Productos</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="metric-card" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                        <div class="metric-value" id="totalVentas">$45,385</div>
+                        <div class="metric-label">Ventas del mes</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="metric-card" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">
+                        <div class="metric-value" id="serviciosPendientes">12</div>
+                        <div class="metric-label">Servicios Pendientes</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">Resumen de Actividades Recientes</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="fas fa-user-plus text-success"></i> Nuevo cliente registrado: Juan Pérez</li>
+                                <li class="mb-2"><i class="fas fa-shopping-cart text-primary"></i> Venta realizada: iPhone 14 Pro - $2,500</li>
+                                <li class="mb-2"><i class="fas fa-tools text-warning"></i> Servicio técnico asignado: Reparación MacBook</li>
+                                <li class="mb-2"><i class="fas fa-box text-info"></i> Nuevo producto agregado: Apple Watch SE</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="clientes" class="tab-content">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Gestión de Clientes</h2>
+                <button class="btn btn-primary" data-entity="clientes">
+                    <i class="fas fa-plus"></i> Nuevo Cliente
+                </button>
+            </div>
+            
+            <div id="selectedInfo"></div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Lista de Clientes</h5>
+                </div>
+                <div class="card-body">
+                    <table id="clientesTable" class="table table-striped table-hover" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Documento</th>
+                                <th>Teléfono</th>
+                                <th>Email</th>
+                                <th>Dirección</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div id="productos" class="tab-content">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Gestión de Productos</h2>
+                <button class="btn btn-primary" data-entity="productos">
+                    <i class="fas fa-plus"></i> Nuevo Producto
+                </button>
+            </div>
+            
+            <div class="filter-section">
+                <h6>Filtros</h6>
+                <div class="row">
+                    <div class="col-md-4">
+                        <select id="marcaFilter" class="form-control">
+                            <option value="">Todas las marcas</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <select id="tipoFilter" class="form-control">
+                            <option value="">Todos los tipos</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="number" id="stockMinimo" class="form-control" placeholder="Stock mínimo">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Inventario de Productos</h5>
+                </div>
+                <div class="card-body">
+                    <table id="productosTable" class="table table-striped table-hover" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Modelo</th>
+                                <th>Cantidad</th>
+                                <th>Color</th>
+                                <th>Tipo</th>
+                                <th>Marca</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div id="marcas" class="tab-content">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Gestión de Marcas</h2>
+                <button class="btn btn-primary" data-entity="marcas">
+                    <i class="fas fa-plus"></i> Nueva Marca
+                </button>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Catálogo de Marcas</h5>
+                </div>
+                <div class="card-body">
+                    <table id="marcasTable" class="table table-striped table-hover" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Marca</th>
+                                <th>Color</th>
+                                <th>Descripción</th>
+                                <th>Productos</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div id="proveedores" class="tab-content">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Gestión de Proveedores</h2>
+                <button class="btn btn-primary" data-entity="proveedores">
+                    <i class="fas fa-plus"></i> Nuevo Proveedor
+                </button>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Lista de Proveedores</h5>
+                </div>
+                <div class="card-body">
+                    <table id="proveedoresTable" class="table table-striped table-hover" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>NIT</th>
+                                <th>Nombre</th>
+                                <th>Cédula</th>
+                                <th>Dirección</th>
+                                <th>Teléfono</th>
+                                <th>Compras</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div id="ventas" class="tab-content">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Gestión de Ventas</h2>
+                <button class="btn btn-primary" data-entity="ventas">
+                    <i class="fas fa-plus"></i> Nueva Venta
+                </button>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Registro de Ventas</h5>
+                </div>
+                <div class="card-body">
+                    <table id="ventasTable" class="table table-striped table-hover" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>ID Venta</th>
+                                <th>Cliente</th>
+                                <th>Cantidad</th>
+                                <th>Valor Total</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div id="compras" class="tab-content">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Gestión de Compras</h2>
+                <button class="btn btn-primary" data-entity="compras">
+                    <i class="fas fa-plus"></i> Nueva Compra
+                </button>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Registro de Compras de Mercancía</h5>
+                </div>
+                <div class="card-body">
+                    <table id="comprasTable" class="table table-striped table-hover" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>ID Compra</th>
+                                <th>Producto</th>
+                                <th>Cantidad</th>
+                                <th>Fecha</th>
+                                <th>Proveedor</th>
+                                <th>Precio</th>
+                                <th>Administrador</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div id="tecnicos" class="tab-content">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Gestión de Técnicos</h2>
+                <button class="btn btn-primary" data-entity="tecnicos">
+                    <i class="fas fa-plus"></i> Nuevo Técnico
+                </button>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Equipo de Técnicos</h5>
+                </div>
+                <div class="card-body">
+                    <table id="tecnicosTable" class="table table-striped table-hover" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre Completo</th>
+                                <th>Documento</th>
+                                <th>Teléfono</th>
+                                <th>Email</th>
+                                <th>Dirección</th>
+                                <th>Tipo Técnico</th>
+                                <th>Servicios</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div id="servicios" class="tab-content">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Servicios Técnicos</h2>
+                <button class="btn btn-primary" data-entity="servicios">
+                    <i class="fas fa-plus"></i> Nuevo Servicio
+                </button>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Registro de Servicios Técnicos</h5>
+                </div>
+                <div class="card-body">
+                    <table id="serviciosTable" class="table table-striped table-hover" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Cliente</th>
+                                <th>Técnico</th>
+                                <th>N° Orden</th>
+                                <th>Teléfono Cliente</th>
+                                <th>Email Cliente</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div id="equipos" class="tab-content">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Gestión de Equipos</h2>
+                <button class="btn btn-primary" data-entity="equipos">
+                    <i class="fas fa-plus"></i> Nuevo Equipo
+                </button>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Inventario de Equipos</h5>
+                </div>
+                <div class="card-body">
+                    <table id="equiposTable" class="table table-striped table-hover" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>ID Equipo</th>
+                                <th>Modelo</th>
+                                <th>Clave</th>
+                                <th>Cliente</th>
+                                <th>Documento Cliente</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div id="facturacion" class="tab-content">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Gestión de Facturación</h2>
+                <button class="btn btn-primary" data-entity="facturacion">
+                    <i class="fas fa-plus"></i> Nueva Factura
+                </button>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Registro de Facturación</h5>
+                </div>
+                <div class="card-body">
+                    <table id="facturacionTable" class="table table-striped table-hover" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>ID Recibo</th>
+                                <th>Fecha Venta</th>
+                                <th>ID Venta</th>
+                                <th>Descripción</th>
+                                <th>NIT DigitSoft</th>
+                                <th>Garantía</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="crudModal" tabindex="-1" aria-labelledby="crudModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="crudModalLabel"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="crudForm"></form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="saveBtn">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const sampleData = {
+            clientes: [
+                { id: 1, documento: '12345678', telefono: '3001234567', email: 'juan@email.com', direccion: 'Calle 123 #45-67' },
+                { id: 2, documento: '87654321', telefono: '3109876543', email: 'maria@email.com', direccion: 'Carrera 45 #12-34' },
+                { id: 3, documento: '11223344', telefono: '3201122334', email: 'carlos@email.com', direccion: 'Avenida 67 #89-01' },
+                { id: 4, documento: '55667788', telefono: '3155667788', email: 'ana@email.com', direccion: 'Calle 89 #23-45' },
+                { id: 5, documento: '99887766', telefono: '3009988776', email: 'luis@email.com', direccion: 'Carrera 12 #34-56' }
+            ],
+            
+            marcas: [
+                { id: 1, marca: 'Apple', color: 'Blanco', descripcion: 'Productos Apple de alta gama', productos: 45 },
+                { id: 2, marca: 'Samsung', color: 'Azul', descripcion: 'Electrónicos Samsung', productos: 32 },
+                { id: 3, marca: 'Huawei', color: 'Rojo', descripcion: 'Dispositivos Huawei', productos: 28 },
+                { id: 4, marca: 'Xiaomi', color: 'Naranja', descripcion: 'Productos Xiaomi', productos: 15 }
+            ],
+            
+            productos: [
+                { id: 1, nombre: 'iPhone 14 Pro', modelo: 'A2890', cantidad: 15, color: 'Azul Sierra', tipo: 'Smartphone', marca: 'Apple', estado: 'En Stock' },
+                { id: 2, nombre: 'Galaxy S23', modelo: 'SM-S911B', cantidad: 8, color: 'Phantom Black', tipo: 'Smartphone', marca: 'Samsung', estado: 'Stock Bajo' },
+                { id: 3, nombre: 'MacBook Air', modelo: 'M2', cantidad: 5, color: 'Space Gray', tipo: 'Laptop', marca: 'Apple', estado: 'Stock Bajo' },
+                { id: 4, nombre: 'iPad Air', modelo: '5ta Gen', cantidad: 12, color: 'Rosa', tipo: 'Tablet', marca: 'Apple', estado: 'En Stock' },
+                { id: 5, nombre: 'P50 Pro', modelo: 'JAD-AL50', cantidad: 3, color: 'Golden Black', tipo: 'Smartphone', marca: 'Huawei', estado: 'Crítico' }
+            ],
+            
+            proveedores: [
+                { nit: '900123456-1', nombre: 'Tech Supply Co.', cedula: '12345678', direccion: 'Zona Industrial', telefono: '6011234567', compras: 25 },
+                { nit: '800987654-2', nombre: 'Digital Imports', cedula: '87654321', direccion: 'Centro Empresarial', telefono: '6019876543', compras: 18 },
+                { nit: '700456789-3', nombre: 'Mobile Solutions', cedula: '45678912', direccion: 'Distrito Tecnológico', telefono: '6014567891', compras: 12 }
+            ],
+            
+            ventas: [
+                { id: 1, cliente: 'Juan Pérez (12345678)', cantidad: 2, valor: 5000000, estado: 'Completada' },
+                { id: 2, cliente: 'María García (87654321)', cantidad: 1, valor: 3200000, estado: 'Pendiente' },
+                { id: 3, cliente: 'Carlos López (11223344)', cantidad: 3, valor: 1800000, estado: 'Completada' },
+                { id: 4, cliente: 'Ana Rodríguez (55667788)', cantidad: 1, valor: 4500000, estado: 'En Proceso' }
+            ],
+            
+            compras: [
+                { id: 1, producto: 'iPhone 14 Pro', cantidad: 10, fecha: '2024-08-15', proveedor: 'Tech Supply Co.', precio: '$45,000,000', administrador: 'Admin Principal' },
+                { id: 2, producto: 'Galaxy S23', cantidad: 15, fecha: '2024-08-12', proveedor: 'Digital Imports', precio: '$32,500,000', administrador: 'Admin Principal' },
+                { id: 3, producto: 'MacBook Air', cantidad: 5, fecha: '2024-08-10', proveedor: 'Mobile Solutions', precio: '$28,000,000', administrador: 'Admin Principal' }
+            ],
+            
+            tecnicos: [
+                { id: 1, nombre: 'Roberto Martínez', documento: 98765432, telefono: '3201234567', email: 'roberto@digitsoft.com', direccion: 'Calle 45 #12-34', tipo: 'Senior', servicios: 15 },
+                { id: 2, nombre: 'Sofía Hernández', documento: 87654321, telefono: '3109876543', email: 'sofia@digitsoft.com', direccion: 'Carrera 23 #56-78', tipo: 'Junior', servicios: 8 },
+                { id: 3, nombre: 'Diego Ramírez', documento: 76543210, telefono: '3157654321', email: 'diego@digitsoft.com', direccion: 'Avenida 67 #89-01', tipo: 'Senior', servicios: 22 }
+            ],
+            
+            servicios: [
+                { id: 1, cliente: 'Juan Pérez', tecnico: 'Roberto Martínez', orden: 'ORD-001', telefono: '3001234567', email: 'juan@email.com', estado: 'En Proceso' },
+                { id: 2, cliente: 'María García', tecnico: 'Sofía Hernández', orden: 'ORD-002', telefono: '3109876543', email: 'maria@email.com', estado: 'Completado' },
+                { id: 3, cliente: 'Carlos López', tecnico: 'Diego Ramírez', orden: 'ORD-003', telefono: '3201122334', email: 'carlos@email.com', estado: 'Pendiente' }
+            ],
+            
+            equipos: [
+                { id: 1, modelo: 'iPhone 13 Pro', clave: 'APL-IP13P-001', cliente: 'Juan Pérez', documento: '12345678' },
+                { id: 2, modelo: 'MacBook Pro 16"', clave: 'APL-MBP16-002', cliente: 'María García', documento: '87654321' },
+                { id: 3, modelo: 'iPad Air', clave: 'APL-IPAD-003', cliente: 'Carlos López', documento: '11223344' }
+            ],
+            
+            facturacion: [
+                { id: 1, fecha: '2024-08-15', venta: '001', descripcion: 'Venta iPhone 14 Pro + Accesorios', nit: '900123456-1', garantia: 'Sí' },
+                { id: 2, fecha: '2024-08-10', venta: '002', descripcion: 'Servicio técnico de MacBook', nit: '900123456-1', garantia: 'No' },
+                { id: 3, fecha: '2024-08-05', venta: '003', descripcion: 'Venta Galaxy S23', nit: '900123456-1', garantia: 'Sí' }
+            ]
+        };
+
+        const dataTables = {}; // Objeto para guardar las instancias de DataTables
+
+        // Mapeo de campos para cada entidad
+        const entityFields = {
+            clientes: ['documento', 'telefono', 'email', 'direccion'],
+            productos: ['nombre', 'modelo', 'cantidad', 'color', 'tipo', 'marca', 'estado'],
+            marcas: ['marca', 'color', 'descripcion'],
+            proveedores: ['nit', 'nombre', 'cedula', 'direccion', 'telefono'],
+            ventas: ['cliente', 'cantidad', 'valor', 'estado'],
+            compras: ['producto', 'cantidad', 'fecha', 'proveedor', 'precio', 'administrador'],
+            tecnicos: ['nombre', 'documento', 'telefono', 'email', 'direccion', 'tipo', 'servicios'],
+            servicios: ['cliente', 'tecnico', 'orden', 'telefono', 'email', 'estado'],
+            equipos: ['modelo', 'clave', 'cliente', 'documento'],
+            facturacion: ['fecha', 'venta', 'descripcion', 'nit', 'garantia']
+        };
+
+        $(document).ready(function() {
+            // Lógica para el cambio de pestañas (Tabs)
+            $('.sidebar .nav-link').on('click', function(e) {
+                e.preventDefault();
+                const tab = $(this).data('tab');
+                
+                // Si ya es la pestaña activa, no hacer nada
+                if ($(this).hasClass('active')) {
+                    return;
+                }
+
+                $('.sidebar .nav-link').removeClass('active');
+                $(this).addClass('active');
+
+                $('.tab-content').removeClass('active');
+                $('#' + tab).addClass('active');
+
+                // Asegura que la tabla se redibuje correctamente
+                if (dataTables[tab + 'Table']) {
+                    dataTables[tab + 'Table'].columns.adjust().draw();
+                }
+            });
+
+            // Lógica para inicializar DataTables
+            function initializeDataTables() {
+                // Iterar sobre cada entidad para inicializar su tabla
+                for (const entity in entityFields) {
+                    if (entity === 'dashboard') continue;
+                    
+                    const tableId = `#${entity}Table`;
+                    const columns = entityFields[entity].map(field => ({ data: field }));
+                    
+                    // Añade la columna de acciones
+                    columns.push({
+                        data: null,
+                        render: function(data, type, row) {
+                            return `<div data-id="${row.id || row.nit}" data-entity="${entity}">
+                                        <button class="btn btn-sm btn-warning btn-edit"><i class="fas fa-pencil-alt"></i></button>
+                                        <button class="btn btn-sm btn-danger btn-delete"><i class="fas fa-trash-alt"></i></button>
+                                    </div>`;
+                        }
+                    });
+                    
+                    dataTables[tableId] = $(tableId).DataTable({
+                        data: sampleData[entity],
+                        columns: columns,
+                        responsive: true
+                    });
+                }
+            }
+
+            initializeDataTables();
+
+            // Manejar los clics en los botones de "Nuevo Registro"
+            $('[data-entity]').on('click', function() {
+                const entity = $(this).data('entity');
+                openModal('add', entity);
+            });
+
+            // Manejar los clics en los botones de "Editar"
+            $(document).on('click', '.btn-edit', function() {
+                const row = $(this).closest('tr');
+                const table = row.closest('table').attr('id');
+                const entity = $(this).parent().data('entity');
+                const data = dataTables[`#${table}`].row(row).data();
+                
+                openModal('edit', entity, data);
+            });
+
+            // Manejar los clics en los botones de "Eliminar"
+            $(document).on('click', '.btn-delete', function() {
+                if (confirm('¿Estás seguro de que quieres eliminar este registro?')) {
+                    const row = $(this).closest('tr');
+                    const table = row.closest('table').attr('id');
+                    const entity = $(this).parent().data('entity');
+                    const data = dataTables[`#${table}`].row(row).data();
+
+                    // Encuentra el índice del registro en el array de datos
+                    const index = sampleData[entity].findIndex(item => item.id === data.id || item.nit === data.nit);
+                    if (index !== -1) {
+                        sampleData[entity].splice(index, 1);
+                        // Redibuja la tabla con los datos actualizados
+                        dataTables[`#${table}`].clear().rows.add(sampleData[entity]).draw();
+                    }
+                }
+            });
+
+            // Lógica para el modal de Guardar (Agregar/Editar)
+            $('#saveBtn').on('click', function() {
+                const entity = $(this).data('entity');
+                const mode = $(this).data('mode');
+                const formData = $('#crudForm').serializeArray().reduce((obj, item) => {
+                    obj[item.name] = item.value;
+                    return obj;
+                }, {});
+
+                if (mode === 'add') {
+                    // Lógica para agregar un nuevo registro
+                    formData.id = sampleData[entity].length + 1; // Asigna un nuevo ID simple
+                    sampleData[entity].push(formData);
+                } else if (mode === 'edit') {
+                    // Lógica para editar un registro existente
+                    const originalId = $(this).data('id');
+                    const index = sampleData[entity].findIndex(item => item.id == originalId || item.nit == originalId);
+                    if (index !== -1) {
+                        // Actualiza los campos
+                        Object.assign(sampleData[entity][index], formData);
+                    }
+                }
+                
+                // Redibuja la tabla con los datos actualizados
+                dataTables[`#${entity}Table`].clear().rows.add(sampleData[entity]).draw();
+                
+                $('#crudModal').modal('hide');
+            });
+            
+            // Función para abrir el modal y llenarlo
+            function openModal(mode, entity, data = null) {
+                const modalTitle = mode === 'add' ? `Nuevo Registro de ${capitalize(entity)}` : `Editar Registro de ${capitalize(entity)}`;
+                const formHtml = generateForm(entity, data);
+                
+                $('#crudModalLabel').text(modalTitle);
+                $('#crudForm').html(formHtml);
+                $('#saveBtn').data('entity', entity).data('mode', mode).data('id', data ? (data.id || data.nit) : null);
+                
+                $('#crudModal').modal('show');
+            }
+            
+            // Genera dinámicamente el formulario del modal
+            function generateForm(entity, data) {
+                let html = '';
+                const fields = entityFields[entity];
+
+                fields.forEach(field => {
+                    const value = data ? data[field] : '';
+                    let label = capitalize(field.replace(/_|-/g, ' '));
+                    
+                    // Manejo de llaves foráneas y select
+                    if (['marca', 'cliente', 'tecnico', 'proveedor'].includes(field)) {
+                        let options = '';
+                        let foreignEntity = '';
+                        let foreignField = '';
+                        
+                        if (field === 'marca') {
+                            foreignEntity = 'marcas';
+                            foreignField = 'marca';
+                        } else if (field === 'cliente') {
+                            foreignEntity = 'clientes';
+                            foreignField = 'documento';
+                        } else if (field === 'tecnico') {
+                            foreignEntity = 'tecnicos';
+                            foreignField = 'nombre';
+                        } else if (field === 'proveedor') {
+                            foreignEntity = 'proveedores';
+                            foreignField = 'nombre';
+                        }
+
+                        sampleData[foreignEntity].forEach(item => {
+                            const isSelected = item[foreignField] === value ? 'selected' : '';
+                            options += `<option value="${item[foreignField]}" ${isSelected}>${item[foreignField]}</option>`;
+                        });
+
+                        html += `
+                            <div class="form-group">
+                                <label for="${field}">${label}</label>
+                                <select class="form-control" id="${field}" name="${field}">
+                                    ${options}
+                                </select>
+                            </div>
+                        `;
+                    } else {
+                        // Campos de texto normales
+                        html += `
+                            <div class="form-group">
+                                <label for="${field}">${label}</label>
+                                <input type="text" class="form-control" id="${field}" name="${field}" value="${value}">
+                            </div>
+                        `;
+                    }
+                });
+                
+                return html;
+            }
+
+            // Función de ayuda para capitalizar la primera letra
+            function capitalize(str) {
+                return str.charAt(0).toUpperCase() + str.slice(1);
+            }
+        });
+    </script>
+</body>
+</html>
